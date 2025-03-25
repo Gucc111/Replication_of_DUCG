@@ -14,7 +14,7 @@ class DUCGNode:
         self.node_type = node_type
         self.states = states if states else []
         self.prior_prob = prior_prob   # 仅对B节点有效
-        self.logic_gate_spec = logic_gate_spec  # 仅对G节点可能有效
+        self.logic_gate_spec = logic_gate_spec  # 仅对G节点可能有效 {1: {'X3': 1, 'X5': 1}, 2: {'X3': 2, 'X5': 2}}
 
     def __repr__(self):
         return f"<DUCGNode {self.name}, type={self.node_type}>"
@@ -62,6 +62,35 @@ class DUCGGraph:
         for e in self.edges:
             result[e.parent].append(e.child)
         return result
+    
+    @property
+    def graph_dict_ad(self):
+        result = defaultdict(list)
+        for e in self.edges:
+            result[e.child].append(e.parent)
+        return result
+    
+    @property
+    def nodes_logic(self):
+        nodes_logic = {}
+        for name, node_obj in self.nodes.items():
+            if node_obj.node_type == 'G':
+                nodes_logic[name] = node_obj
+        return nodes_logic
+    
+    def update_all_logic_state(self):
+        for name, node_obj in self.nodes_logic.items():
+            assigned_state = None
+            is_satisfied = all(parent in self.state_info for parent in self.graph_dict_ad[name])
+            if is_satisfied:
+                assigned_state = 0
+                for state, condspec in node_obj.logic_gate_spec.items():
+                    matched = all(self.state_info[n] == s for n, s in condspec.items())
+                    if matched:
+                        assigned_state = state
+                        break
+            if assigned_state is not None:
+                self.set_state(name, assigned_state)
 
     def _copy_graph(self):
         newg = DUCGGraph()

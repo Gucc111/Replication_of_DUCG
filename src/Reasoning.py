@@ -8,7 +8,7 @@ def condition_satisfied(graph: DUCGGraph, condition):
         """
         evidence = graph.state_info
         # 判断证据是否满足有向弧的条件
-        is_satisfied = all(k in evidence and evidence[k] == v for k, v in condition)
+        is_satisfied = all(k in evidence and evidence[k] == v for k, v in condition.items())
         return is_satisfied
 
 # 化简因果图
