@@ -2,7 +2,7 @@ from collections import defaultdict
 import copy
 
 class DUCGNode:
-    def __init__(self, name, node_type, states=None, prior_prob=None, logic_gate_spec=None):
+    def __init__(self, name, node_type, prior_prob=None, logic_gate_spec=None):
         """
         name: 节点名
         node_type: 节点类型
@@ -18,7 +18,7 @@ class DUCGNode:
         return f"<DUCGNode {self.name}, type={self.node_type}>"
 
 class DUCGEdge:
-    def __init__(self, parent_name, child_name, condition=None):
+    def __init__(self, parent_name, child_name, weight=None, prob_matrix=None, condition=None):
         """
         parent: 父节点名
         child: 子节点类型
@@ -27,6 +27,8 @@ class DUCGEdge:
         self.parent = parent_name
         self.child = child_name
         self.condition = condition  # {'X3': 1}
+        self.weight = weight
+        self.prob_matrix = prob_matrix
 
     def __repr__(self):
         cstr = f", cond={self.condition}" if self.condition else ""
@@ -69,6 +71,13 @@ class DUCGGraph:
         return result
     
     @property
+    def edges_dict_ad(self):
+        result = defaultdict(list)
+        for e in self.edges:
+            result[e.child].append(e)
+        return result
+    
+    @property
     def nodes_logic(self):
         nodes_logic = {}
         for name, node_obj in self.nodes.items():
@@ -104,3 +113,6 @@ class DUCGGraph:
     def __repr__(self):
         return (f"<DUCGGraph: {len(self.nodes)} nodes, {len(self.edges)} edges, "
                 f"states={self.state_info}>")
+    
+    def __getitem__(self, index):
+        return self.nodes[index]

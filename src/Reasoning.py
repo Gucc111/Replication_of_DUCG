@@ -1,5 +1,6 @@
 from .Model import *
-from collections import defaultdict, deque
+from collections import deque
+import numpy as np
 
 # 判断条件有向弧是否成立
 def condition_satisfied(graph: DUCGGraph, condition):
@@ -107,3 +108,30 @@ def decompose_by_B(graph: DUCGGraph):
             results.append(subg) # 保留能解释异常证据的子图
     
     return results
+
+# 计算某个子图中所有证据的联合概率
+def calculate_evi_prob(graph: DUCGGraph):
+        results = []
+        
+        for name, state in graph.state_info.items():
+            edges2node = graph.edges_dict_ad[name]
+            
+            weights = []
+            probs = []
+            for e in edges2node:
+                weights.append(e.weight)
+                
+                if graph[e.parent].node_type != 'B' and graph[e.parent].node_type != 'D':
+                    idx = graph.state_info[e.parent]
+                else:
+                    idx = 1
+                probs.append(e.prob_matrix[state, idx])
+            
+            weights = np.array(weights)
+            weights = weights / weights.sum()
+            probs = np.array(probs)
+
+            cond_prob = (weights * probs).sum()
+            results.append(cond_prob)
+        
+        return np.prod(results)
