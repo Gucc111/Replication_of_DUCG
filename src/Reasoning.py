@@ -111,27 +111,27 @@ def decompose_by_B(graph: DUCGGraph):
 
 # 计算某个子图中所有证据的联合概率
 def calculate_evi_prob(graph: DUCGGraph):
-        results = []
+    results = []
+    
+    for name, state in graph.state_info.items():
+        edges2node = graph.edges_dict_ad[name]
         
-        for name, state in graph.state_info.items():
-            edges2node = graph.edges_dict_ad[name]
+        weights = []
+        probs = []
+        for e in edges2node:
+            weights.append(e.weight)
             
-            weights = []
-            probs = []
-            for e in edges2node:
-                weights.append(e.weight)
-                
-                if graph[e.parent].node_type != 'B' and graph[e.parent].node_type != 'D':
-                    idx = graph.state_info[e.parent]
-                else:
-                    idx = 1
-                probs.append(e.prob_matrix[state, idx])
-            
-            weights = np.array(weights)
-            weights = weights / weights.sum()
-            probs = np.array(probs)
+            if graph[e.parent].node_type != 'B' and graph[e.parent].node_type != 'D':
+                idx = graph.state_info[e.parent]
+            else:
+                idx = 1
+            probs.append(e.prob_matrix[state, idx])
+        
+        weights = np.array(weights)
+        weights = weights / weights.sum()
+        probs = np.array(probs)
 
-            cond_prob = (weights * probs).sum()
-            results.append(cond_prob)
-        
-        return np.prod(results)
+        cond_prob = (weights * probs).sum()
+        results.append(cond_prob)
+    
+    return np.prod(results)
