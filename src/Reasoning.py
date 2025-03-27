@@ -1,4 +1,4 @@
-from .model import *
+from .Model import *
 from collections import defaultdict, deque
 
 # 判断条件有向弧是否成立
@@ -22,7 +22,7 @@ def simplify_graph(graph: DUCGGraph):
         for e in graph.edges:
             # 检查父节点
             parent_type = graph.nodes[e.parent].node_type
-            if parent_type != 'B' and parent_type != 'G': # 如果有向弧涉及原因节点，则不检查父节点，因为提交证据时原因节点没有状态
+            if parent_type != 'B' and parent_type != 'D': # 如果有向弧涉及原因节点，则不检查父节点，因为提交证据时原因节点没有状态
                 parent_st = graph.state_info.get(e.parent, None)
                 if not parent_st:
                     continue

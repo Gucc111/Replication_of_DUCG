@@ -6,13 +6,11 @@ class DUCGNode:
         """
         name: 节点名
         node_type: 节点类型
-        states: 节点可能的状态集
         prior_prob: 若为B节点时，可存储先验概率
         logic_gate_spec: 若为G节点，可能需要存储门的定义
         """
         self.name = name
         self.node_type = node_type
-        self.states = states if states else []
         self.prior_prob = prior_prob   # 仅对B节点有效
         self.logic_gate_spec = logic_gate_spec  # 仅对G节点可能有效 {1: {'X3': 1, 'X5': 1}, 2: {'X3': 2, 'X5': 2}}
 
