@@ -1,0 +1,33 @@
+(array([0.1]), array([1.]))
+初始图: <DUCGGraph: 9 nodes, 11 edges, states={'X3': 2, 'X4': 1, 'X5': 2, 'X6': 2, 'X7': 0, 'G8': 2}>
+Edges:
+   <DUCGEdge B1->X3>
+   <DUCGEdge B1->X4>
+   <DUCGEdge B1->X5>
+   <DUCGEdge B2->X4>
+   <DUCGEdge B2->X5, cond={'X3': 1}>
+   <DUCGEdge X3->G8>
+   <DUCGEdge X4->X6>
+   <DUCGEdge X5->G8>
+   <DUCGEdge G8->X7>
+   <DUCGEdge D9->X7>
+   <DUCGEdge X7->X6>
+
+化简后图: <DUCGGraph: 7 nodes, 7 edges, states={'X3': 2, 'X4': 1, 'X5': 2, 'X6': 2, 'G8': 2}>
+Edges:
+   <DUCGEdge B1->X3>
+   <DUCGEdge B1->X4>
+   <DUCGEdge B1->X5>
+   <DUCGEdge B2->X4>
+   <DUCGEdge X3->G8>
+   <DUCGEdge X4->X6>
+   <DUCGEdge X5->G8>
+
+分解后子图1: <DUCGGraph: 6 nodes, 6 edges, states={'X3': 2, 'X4': 1, 'X5': 2, 'X6': 2, 'G8': 2}>
+Edges:
+   <DUCGEdge B1->X3>
+   <DUCGEdge B1->X4>
+   <DUCGEdge B1->X5>
+   <DUCGEdge X3->G8>
+   <DUCGEdge X4->X6>
+   <DUCGEdge X5->G8>
