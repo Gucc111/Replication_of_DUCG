@@ -109,29 +109,53 @@ def decompose_by_B(graph: DUCGGraph):
     
     return results
 
-# 计算某个子图中所有证据的联合概率
+# 计算某个子图中所有证据的联合概率Pr{E|H}和Pr{HE}
 def calculate_evi_prob(graph: DUCGGraph):
     results = []
     
-    for name, state in graph.state_info.items():
-        edges2node = graph.edges_dict_ad[name]
+    for name, state in graph.state_info.items(): # 遍历异常证据
+        edges2node = graph.edges_dict_ad[name] # 找到以这个节点为子节点的所有有向弧
         
-        weights = []
-        probs = []
-        for e in edges2node:
+        weights = [] # 保存每条有效弧的权重
+        probs = [] # 保存父变量对子变量的因果作用概率
+        for e in edges2node: # 遍历有向弧
             weights.append(e.weight)
             
+            # 确定索引值，与父变量的状态有关，用于获取因果作用权重中的值
             if graph[e.parent].node_type != 'B' and graph[e.parent].node_type != 'D':
                 idx = graph.state_info[e.parent]
-            else:
+            else: # 如果这条有向弧的父节点为原因变量，则自动把状态取为1，因为在提交异常证据时不会提交原因节点的状态，只能后向传播
                 idx = 1
             probs.append(e.prob_matrix[state, idx])
         
         weights = np.array(weights)
-        weights = weights / weights.sum()
+        weights = weights / weights.sum() # 计算每条有效弧的相对权重
         probs = np.array(probs)
 
-        cond_prob = (weights * probs).sum()
+        cond_prob = (weights * probs).sum() # 对每条有向弧加权，计算多个父变量对同一个子变量的因果作用概率
         results.append(cond_prob)
     
-    return np.prod(results)
+    # 获取子图中原因变量的先验概率
+    prior_prob = next(iter(graph.nodes_cause.values())).prior_prob 
+    
+    return np.prod(results), np.prod(results) * prior_prob
+
+def calculate_state_sort_probs(graph_list: list):
+    subg_weights = [] # 保存子图权重
+    subg_post_prob = [] # 保存每个子图的后验概率
+    for subg in graph_list:
+        cond_prob, joint_prob = calculate_evi_prob(subg)
+        post_prob = joint_prob / cond_prob # 计算后验概率
+        subg_weights.append(cond_prob)
+        subg_post_prob.append(post_prob)
+    
+    # 计算每张子图的权重
+    subg_weights = np.array(subg_weights)
+    subg_weights = subg_weights / subg_weights.sum()
+    
+    # 计算状态概率和排序概率
+    subg_post_prob = np.array(subg_post_prob)
+    state_prob = subg_weights * subg_post_prob
+    sort_prob = state_prob / state_prob.sum()
+
+    return state_prob, sort_prob

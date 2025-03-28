@@ -10,8 +10,8 @@ def main():
     sim_g = simplify_graph(g1)
     subgs = decompose_by_B(sim_g)
 
-    for subg in subgs:
-        print(calculate_evi_prob(subg))
+    results = calculate_state_sort_probs(subgs)
+    print(results)
 
 if __name__ == '__main__':
     main()

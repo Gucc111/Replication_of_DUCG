@@ -71,12 +71,27 @@ class DUCGGraph:
         return result
     
     @property
+    def edges_dict(self):
+        result = defaultdict(list)
+        for e in self.edges:
+            result[e.parent].append(e)
+        return result
+
+    @property
     def edges_dict_ad(self):
         result = defaultdict(list)
         for e in self.edges:
             result[e.child].append(e)
         return result
     
+    @property
+    def nodes_cause(self):
+        nodes_cause = {}
+        for name, node_obj in self.nodes.items():
+            if node_obj.node_type == 'B':
+                nodes_cause[name] = node_obj
+        return nodes_cause
+
     @property
     def nodes_logic(self):
         nodes_logic = {}
