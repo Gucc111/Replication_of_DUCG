@@ -3,9 +3,9 @@ from src.Reasoning import *
 
 def main():
     g1 = g._copy_graph()
-    g1.set_state("X3", 2)
+    g1.set_state("X3", 1)
     g1.set_state("X4", 1)
-    g1.set_state("X5", 2)
+    g1.set_state("X5", 1)
     g1.set_state("X6", 2)
     g1.set_state("X7", 0)
     g1.update_all_logic_state()

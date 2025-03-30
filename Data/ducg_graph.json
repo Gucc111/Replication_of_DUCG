@@ -1,0 +1,312 @@
+{
+  "nodes": [
+    {
+      "name": "B1",
+      "node_type": "B",
+      "prior_prob": 0.1
+    },
+    {
+      "name": "B2",
+      "node_type": "B",
+      "prior_prob": 0.05
+    },
+    {
+      "name": "X3",
+      "node_type": "X"
+    },
+    {
+      "name": "X4",
+      "node_type": "X"
+    },
+    {
+      "name": "X5",
+      "node_type": "X"
+    },
+    {
+      "name": "X6",
+      "node_type": "X"
+    },
+    {
+      "name": "X7",
+      "node_type": "X"
+    },
+    {
+      "name": "G8",
+      "node_type": "G",
+      "logic_gate_spec": {
+        "1": {
+          "X3": 1,
+          "X5": 1
+        },
+        "2": {
+          "X3": 2,
+          "X5": 2
+        }
+      }
+    },
+    {
+      "name": "D9",
+      "node_type": "D",
+      "prior_prob": 0.05
+    }
+  ],
+  "edges": [
+    {
+      "parent_name": "B1",
+      "child_name": "X3",
+      "weight": 0.7062,
+      "prob_matrix": [
+        [
+          0.5217,
+          0.7838
+        ],
+        [
+          0.7193,
+          0.9715
+        ],
+        [
+          0.8131,
+          0.5702
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "B1",
+      "child_name": "X4",
+      "weight": 0.689,
+      "prob_matrix": [
+        [
+          0.18,
+          0.4543
+        ],
+        [
+          0.0921,
+          0.5339
+        ],
+        [
+          0.1119,
+          0.6119
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "B1",
+      "child_name": "X5",
+      "weight": 0.9188,
+      "prob_matrix": [
+        [
+          0.7167,
+          0.4037
+        ],
+        [
+          0.4747,
+          0.9125
+        ],
+        [
+          0.6378,
+          0.9641
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "B2",
+      "child_name": "X3",
+      "weight": 0.9738,
+      "prob_matrix": [
+        [
+          0.6002,
+          0.7425
+        ],
+        [
+          0.9333,
+          0.2848
+        ],
+        [
+          0.5535,
+          0.4376
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "B2",
+      "child_name": "X4",
+      "weight": 0.089,
+      "prob_matrix": [
+        [
+          0.3634,
+          0.4018
+        ],
+        [
+          0.8724,
+          0.492
+        ],
+        [
+          0.0405,
+          0.9211
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "B2",
+      "child_name": "X5",
+      "weight": 0.2727,
+      "prob_matrix": [
+        [
+          0.473,
+          0.7893
+        ],
+        [
+          0.6031,
+          0.0204
+        ],
+        [
+          0.164,
+          0.126
+        ]
+      ],
+      "condition": {
+        "X3": 1
+      }
+    },
+    {
+      "parent_name": "X3",
+      "child_name": "G8",
+      "weight": 0.7916,
+      "prob_matrix": [
+        [
+          0.6698,
+          0.7939,
+          0.6405
+        ],
+        [
+          0.34,
+          0.9499,
+          0.2202
+        ],
+        [
+          0.8295,
+          0.5069,
+          0.9097
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "X4",
+      "child_name": "X6",
+      "weight": 0.7272,
+      "prob_matrix": [
+        [
+          0.3911,
+          0.057,
+          0.457
+        ],
+        [
+          0.968,
+          0.7674,
+          0.5512
+        ],
+        [
+          0.554,
+          0.7353,
+          0.0247
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "X5",
+      "child_name": "G8",
+      "weight": 0.8372,
+      "prob_matrix": [
+        [
+          0.825,
+          0.5255,
+          0.948
+        ],
+        [
+          0.2101,
+          0.8305,
+          0.2252
+        ],
+        [
+          0.9102,
+          0.3653,
+          0.7603
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "G8",
+      "child_name": "X7",
+      "weight": 0.6036,
+      "prob_matrix": [
+        [
+          0.3233,
+          0.1151,
+          0.1271
+        ],
+        [
+          0.2222,
+          0.8633,
+          0.0457
+        ],
+        [
+          0.6319,
+          0.1008,
+          0.8889
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "D9",
+      "child_name": "X7",
+      "weight": 0.4758,
+      "prob_matrix": [
+        [
+          0.6989,
+          0.0241
+        ],
+        [
+          0.662,
+          0.536
+        ],
+        [
+          0.8322,
+          0.5262
+        ]
+      ],
+      "condition": null
+    },
+    {
+      "parent_name": "X7",
+      "child_name": "X6",
+      "weight": 0.1274,
+      "prob_matrix": [
+        [
+          0.9347,
+          0.098,
+          0.4866
+        ],
+        [
+          0.6306,
+          0.6291,
+          0.5752
+        ],
+        [
+          0.7682,
+          0.9083,
+          0.3536
+        ]
+      ],
+      "condition": null
+    }
+  ]
+}
