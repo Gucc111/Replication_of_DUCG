@@ -17,7 +17,7 @@ class DUCGNode:
         return f"<DUCGNode {self.name}, type={self.node_type}>"
 
 class DUCGEdge:
-    def __init__(self, parent_name: str, child_name: str, weight: float, prob_matrix, condition=None):
+    def __init__(self, parent_name: str, child_name: str, weight: float, prob_matrix, condition: dict = None):
         # 父节点名称
         self.parent = parent_name
         # 子节点名称

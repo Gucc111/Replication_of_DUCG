@@ -6,8 +6,8 @@ def main():
     g1.set_state("X3", 1)
     g1.set_state("X4", 1)
     g1.set_state("X5", 1)
-    g1.set_state("X6", 2)
     g1.set_state("X7", 0)
+    g1.set_state("X6", 2)
     g1.update_all_logic_state()
     
     sim_g = simplify_graph(g1)

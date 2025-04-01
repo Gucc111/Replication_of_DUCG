@@ -30,7 +30,7 @@ def simplify_graph(graph: DUCGGraph) -> DUCGGraph:
                 continue
 
         # 检查子节点
-        if graph.state_info.get(e.child, None) == 0:
+        if not graph.state_info.get(e.child, None):
             continue
 
         # 检查条件F变量
